@@ -5,10 +5,13 @@ This is a simple (to the point of being silly) data store intended for prototypi
 It will let you persist JS objects to disk with very little effort in JSON form.
 
 DS is:
+
 * Easy to install
 * Easy to use
+* Free!
 
 DS is NOT:
+
 * Secure.
 * Scaleable
 * Flexible.
