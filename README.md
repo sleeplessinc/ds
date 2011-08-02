@@ -15,11 +15,11 @@ DS is NOT:
 * Secure.
 * Scaleable
 * Flexible.
-* featureful.
+* Featureful.
 
-Do not use this in production.
+*** Do not use this in production. ***
 
-Example
+## Example
 
 	var DS = require("ds").DS
 
@@ -31,7 +31,7 @@ Example
 	ds.save()		// data (all of it) written to ./ds.json
 	ds.clear()		// all data erased
 
-API
+## API
 
 	load(path)		// load JSON data from file into memory
 	save(path)		// save JSON data to a file
