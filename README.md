@@ -1,7 +1,7 @@
 
 # DS (data store)
 
-This is a simple (to the point of being silly) data store intended for prototyping.
+This is a simple data store intended for prototyping.
 It will let you persist JS objects to disk with very little effort in JSON form.
 
 DS is:
