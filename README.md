@@ -4,11 +4,17 @@
 This is a simple (to the point of being silly) data store intended for prototyping.
 It will let you persist JS objects to disk with very little effort in JSON form.
 
-* It is not secure.
-* It will not scale.
-* It is not flexible.
-* It is featureless.
-* DO NOT USE IN PRODUCTION (This means you!)
+DS is:
+* Easy to install
+* Easy to use
+
+DS is NOT:
+* Secure.
+* Scaleable
+* Flexible.
+* featureful.
+
+Do not use this in production.
 
 Example
 
