@@ -19,6 +19,10 @@ DS is NOT:
 
 *** Do not use this in production. ***
 
+## Install
+
+	npm install ds
+
 ## Example
 
 	var DS = require("ds").DS
