@@ -28,62 +28,67 @@ var fs = require("fs"),
 
 
 var load = function(f) {
-	f = f || this.file
-	this.__proto__.file = f
+	var self = this
+	f = f || self.file
+	self.__proto__.file = f
 	try {
 		var ds = JSON.parse(fs.readFileSync(f))
 	}
 	catch(e) {
-		this.clear()
+		self.clear()
 	} 
 	finally {
 		for(k in ds) 
-			this[k] = ds[k]
-		log(this.file+" LOAD:\n"+insp(this))
+			self[k] = ds[k]
+		log(self.file+" LOAD:\n"+insp(self))
 	}
 }
 
 var save = function(f) {
-	f = f || this.file
-	this.__proto__.file = f
+	var self = this
+	f = f || self.file
+	self.__proto__.file = f
 	try {
-		fs.writeFileSync(f, JSON.stringify(this))
+		fs.writeFileSync(f, JSON.stringify(self))
 	}
 	catch(e) {
 	}
 	finally {
-		log(this.file+" SAVE:\n"+insp(this))
+		log(self.file+" SAVE:\n"+insp(self))
 	}
 }
 
 var clear = function() {
-	for(k in this) 
-		delete this[k]
-	log(this.file+" CLEAR:\n"+insp(this))
+	var self = this
+	for(k in self) 
+		delete self[k]
+	log(self.file+" CLEAR:\n"+insp(self))
 }
 
 var LS = { load:load, save:save, clear:clear }
 
-var F = function(file) {
-	this.file = file
+var F = function(file, opts) {
+	var self = this
+	self.file = file
+	self.opts = opts || {}
 }
 F.prototype = LS
 
 
 var D = function(f, opts) {
-	this.opts = opts || {}
-	this.__proto__ = new F("ds.json")
-	this.load(f)
-	if(this.opts.autoSave > 0) {
+	var self = this
+	self.__proto__ = new F("ds.json", opts)
+	self.load(f)
+	if(self.opts.autoSave > 0) {
 		setInterval(function() {
-			this.save()
-		}, this.opts.autoSave * 1000)
+			self.save()
+		}, self.opts.autoSave * 1000)
 	}
-	if(this.opts.debug) {
+	if(self.opts.debug) {
 		log = console.log
 		insp = util.inspect
 	}
-	log(this.file+" NEW:\n"+insp(this))
+	log(self.file+" NEW:\n"+insp(self))
 }
 D.prototype = new F()
 
