@@ -22,11 +22,12 @@ IN THE SOFTWARE.
 */
 
 var fs = require("fs"),
-	util = require("util"), insp = util.inspect,
-	log = function(){} //console.log
+	util = require("util"),
+	insp = function(){},
+	log = function(){}
 
 
-function load(f) {
+var load = function(f) {
 	f = f || this.file
 	this.__proto__.file = f
 	try {
@@ -38,11 +39,11 @@ function load(f) {
 	finally {
 		for(k in ds) 
 			this[k] = ds[k]
-		//log(this.file+" LOAD:\n"+insp(this))
+		log(this.file+" LOAD:\n"+insp(this))
 	}
 }
 
-function save(f) {
+var save = function(f) {
 	f = f || this.file
 	this.__proto__.file = f
 	try {
@@ -55,31 +56,37 @@ function save(f) {
 	}
 }
 
-function clear() {
+var clear = function() {
 	for(k in this) 
 		delete this[k]
-	//log(this.file+" CLEAR:\n"+insp(this))
+	log(this.file+" CLEAR:\n"+insp(this))
 }
 
 var LS = { load:load, save:save, clear:clear }
 
-function F(file) {
+var F = function(file) {
 	this.file = file
 }
 F.prototype = LS
 
 
-function D(f, d) {
-	exports.debug = d
+var D = function(f, opts) {
+	this.opts = opts || {}
 	this.__proto__ = new F("ds.json")
-	//log(this.file+" NEW:\n"+insp(this))
 	this.load(f)
+	if(this.opts.autoSave > 0) {
+		setInterval(function() {
+			this.save()
+		}, this.opts.autoSave * 1000)
+	}
+	if(this.opts.debug) {
+		log = console.log
+		insp = util.inspect
+	}
+	log(this.file+" NEW:\n"+insp(this))
 }
 D.prototype = new F()
 
 
 exports.DS = D
-
-
-
 
