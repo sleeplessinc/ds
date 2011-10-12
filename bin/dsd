@@ -38,18 +38,16 @@ function listener( req, res ) {
 		case 'get':
 			var val = store[ key ];
 
-			if( val ) {
-				res.success( val );
-			} else {
-				res.error( 'Invalid key!' );
-			}
+			res.success( val );
 		break;
 
 		case 'set':
 			var val = query.val;
 
 			if( ! val ) {
-				res.error( 'No value specified!' );
+				delete store[ key ];
+
+				res.success( 'Delete successful.' );
 			} else {
 				try {
 					var parsed = JSON.parse( val );
