@@ -39,7 +39,7 @@ function listener( req, res ) {
 			var val = store[ key ];
 
 			if( val ) {
-				res.writeJSON( val );
+				res.success( val );
 			} else {
 				res.error( 'Invalid key!' );
 			}
@@ -69,6 +69,8 @@ function listener( req, res ) {
 			res.success( 'Delete successful.' );
 		break;
 	}
+
+	console.log( store );
 }
 
 var server	= http.createServer( listener );
