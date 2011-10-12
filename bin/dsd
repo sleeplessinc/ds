@@ -20,6 +20,8 @@ http.ServerResponse.prototype.success	= function( msg ) {
 	this.writeJSON( { 'ok' : msg } );
 }
 
+var saveInterval	= 0;
+
 function listener( req, res ) {
 	var query	= url.parse( req.url, true ).query;
 
@@ -75,6 +77,45 @@ function listener( req, res ) {
 			delete store[ key ];
 
 			res.success( 'Delete successful.' );
+		break;
+
+		case 'save':
+			// force a cache save to disk
+			console.log( 'saving cache (manual)...' );
+
+			store.save();
+
+			console.log( 'cache saved.' );
+
+			res.success( 'Cache saved.' );
+		break;
+
+		case 'config':
+			// manage the data store's state
+			var autosave	= ( parseInt( query.autosave ) >= 0 ) ? query.autosave : 0;
+			var file	= req.file;
+
+			if( file ) {
+				store.file = file;
+			}
+			
+			if( autosave > 0 ) {
+				saveInterval && clearInterval( saveInterval );
+
+				saveInterval = setInterval( function() {
+					console.log( 'saving cache...' );
+
+					store.save();
+
+					console.log( 'cache saved.' );
+				}, autosave * 1000 );
+			} else {
+				console.log( 'disabling autosave.' );
+
+				saveInterval && clearInterval( saveInterval );
+			}
+
+			res.success( 'Configuration updated.' );
 		break;
 	}
 
