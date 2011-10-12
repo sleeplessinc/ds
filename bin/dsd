@@ -43,6 +43,7 @@ function listener( req, res ) {
 
 		case 'set':
 			var val = query.val;
+			var ttl = ( parseInt( query.ttl ) >= 0 ) ? query.ttl : 0;
 
 			if( ! val ) {
 				delete store[ key ];
@@ -53,6 +54,15 @@ function listener( req, res ) {
 					var parsed = JSON.parse( val );
 
 					store[ key ] = parsed;
+
+					if( ttl > 0 ) {
+						setTimeout( function() {
+							delete store[ key ];
+
+							console.log( 'key %s expired out after %s seconds', key, ttl );
+
+						}, ttl * 1000 );
+					}
 
 					res.success( 'Write successful.' );
 				} catch( e ) {
