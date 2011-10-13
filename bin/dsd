@@ -112,20 +112,11 @@ function listener( req, res ) {
 			expireTimes[ key ] = time() + ttl;
 		}
 
+		/*
 		if( /^_/.test( key ) ) {
-
-			// special vars start with _
-		
-			/*
-			if( key == "_autosave" ) {
-				val = val || 0;
-				...
-			}
-
-			if( key == "_file" ) {
-				...
-			}*/
+			// special vars start with _ ...
 		}
+		*/
 
 		res.success( "stored: "+key );
 		return;
@@ -139,7 +130,7 @@ function listener( req, res ) {
 
 function pulse() {
 
-	// keep temporary, but orphaned values from hanging around too long
+	// flush out old, stale values
 	for( k in store ) {
 		var xtime = expireTimes[ k ];
 		if( xtime && time() >= xtime ) {
