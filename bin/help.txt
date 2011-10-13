@@ -1,0 +1,36 @@
+<html><body><pre>
+
+API
+-------------------
+
+/?act=save
+
+	Force cache to be saved to disk
+
+
+/?act=set&key=foo&val=7&ttl=secs&save=true
+
+	Stores the given value under the key "foo".
+
+	"ttl" and "save" are optional.
+
+	ttl:
+		The value will flushed from cache after "secs" seconds.
+		Attempts to "get" the value will return null.
+	
+	save:
+		If this is "true", then cache is saved to disk after the value is set.
+
+
+/?act=set&key=foo&val=null&save=true
+
+	Deletes the key "foo" and any value that might have been stored under it.
+
+	"save" is optional and acts as it does with "set" above.
+
+
+/?act=get&key=foo
+
+	Return the object stored under the key "foo".
+
+

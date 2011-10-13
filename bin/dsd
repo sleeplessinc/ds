@@ -2,6 +2,7 @@
 
 var log		= console.log;
 
+var fs		= require( 'fs' );
 var http	= require( 'http' );
 var url		= require( 'url' );
 
@@ -33,6 +34,11 @@ http.ServerResponse.prototype.success	= function( msg ) {
 }
 
 
+function helpText() {
+	return fs.readFileSync("help.txt", "utf8");
+}
+
+
 function listener( req, res ) {
 
 	var query	= url.parse( req.url, true ).query;
@@ -45,6 +51,8 @@ function listener( req, res ) {
 	log("act="+act+" key="+key+" val="+val+" ttl="+ttl);
 
 	if(req.url == "/favicon.ico") { res.writeHead(410); res.end(); return; }
+
+	if(req.url == "/help") { res.end( helpText() ); return; }
 
 	if( act == 'save' ) {
 		// force immediate save to persistent storage
