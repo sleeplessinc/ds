@@ -13,10 +13,11 @@ DS is:
 
 DS is NOT:
 
-* Secure.
+* Smart
+* Secure
 * Scaleable
-* Flexible.
-* Featureful.
+* Flexible
+* Featureful
 
 *** Do not use this in production. ***
 
@@ -28,6 +29,8 @@ DS is NOT:
 
 	var DS = require("ds").DS
 
+	// if no argument, "./ds.json" is used
+	// constructore calls load()
 	var ds = new DS("./ds.json")
 
 	ds.one = 1
@@ -39,10 +42,10 @@ DS is NOT:
 ## API
 
 	load(path)		// load JSON data from file into memory
-	save(path)		// save JSON data to a file
+					// if path not provided, path provided to constructor is used
+	save(path)		// save JSON data to a specific file
 	save()			// save JSON data to same file as last time
 	clear()			// clear the in-memory data store
-	
 
 ## License
 

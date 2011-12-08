@@ -21,11 +21,7 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 IN THE SOFTWARE. 
 */
 
-var fs = require("fs"),
-	util = require("util"),
-	insp = function(){},
-	log = function(){}
-
+var fs = require("fs")
 
 var load = function(f) {
 	var self = this
@@ -33,36 +29,25 @@ var load = function(f) {
 	self.__proto__.file = f
 	try {
 		var ds = JSON.parse(fs.readFileSync(f))
+		for(var key in ds) 
+			self[key] = ds[key]
 	}
 	catch(e) {
 		self.clear()
 	} 
-	finally {
-		for(k in ds) 
-			self[k] = ds[k]
-		log(self.file+" LOAD:\n"+insp(self))
-	}
 }
 
 var save = function(f) {
 	var self = this
 	f = f || self.file
 	self.__proto__.file = f
-	try {
-		fs.writeFileSync(f, JSON.stringify(self))
-	}
-	catch(e) {
-	}
-	finally {
-		log(self.file+" SAVE:\n"+insp(self))
-	}
+	fs.writeFileSync(f, JSON.stringify(self))
 }
 
 var clear = function() {
 	var self = this
-	for(k in self) 
-		delete self[k]
-	log(self.file+" CLEAR:\n"+insp(self))
+	for(var key in self) 
+		delete self[key]
 }
 
 var LS = { load:load, save:save, clear:clear }
@@ -79,23 +64,14 @@ var D = function(f, opts) {
 	var self = this
 	self.__proto__ = new F("ds.json", opts)
 	self.load(f)
-	if(self.opts.autoSave > 0) {
-		setInterval(function() {
-			self.save()
-		}, self.opts.autoSave * 1000)
-	}
-	if(self.opts.debug) {
-		log = console.log
-		insp = util.inspect
-	}
-	log(self.file+" NEW:\n"+insp(self))
 }
 D.prototype = new F()
 
-
 exports.DS = D
 
-// -----------------------------------------------
 
+if(require.main === module) {
+	require("./test.js")
+}
 
 
