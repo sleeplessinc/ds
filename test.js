@@ -1,9 +1,9 @@
 
-var fs = require("fs")
-var assert = require("assert")
-var DS = require("./index.js").DS
+const fs = require("fs")
+const assert = require("assert")
+const DS = require("./index.js")
 
-var ds
+let ds
 
 ds = new DS()
 ds.num = 7
@@ -25,8 +25,8 @@ ds.save()
 ds = new DS("ds2.json")
 assert(ds.num === undefined)
 
-fs.unlink("ds.json")
-fs.unlink("ds2.json")
+fs.unlinkSync("ds.json")
+fs.unlinkSync("ds2.json")
 
 console.log("All tests passed OK")
 
