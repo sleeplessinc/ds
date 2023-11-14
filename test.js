@@ -1,7 +1,7 @@
 
 const fs = require("fs")
 const assert = require("assert")
-const DS = require("./index.js")
+const DS = require(".")
 
 let ds
 

@@ -47,7 +47,7 @@ function D( f, opts ) {
 
 D.prototype = new F();
 
-D.DS = D;   // backward compatibility - deprecate
+//D.DS = D;   // backward compatibility - deprecate
 
 module.exports = D
 
