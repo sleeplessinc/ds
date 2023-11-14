@@ -39,15 +39,13 @@ function F( file, opts ) {
 
 F.prototype = ldsv;
 
-function D( f, opts ) {
+function DS( f, opts ) {
     const self = this;
     self.__proto__ = new F( "ds.json", opts );
     self.load( f );
 }
 
-D.prototype = new F();
+DS.prototype = new F();
 
-//D.DS = D;   // backward compatibility - deprecate
-
-module.exports = D
+module.exports = DS;
 

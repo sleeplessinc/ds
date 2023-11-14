@@ -25,9 +25,6 @@ ds.save()
 ds = new DS("ds2.json")
 assert(ds.num === undefined)
 
-fs.unlinkSync("ds.json")
-fs.unlinkSync("ds2.json")
-
 console.log("All tests passed OK")
 
 
