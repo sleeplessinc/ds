@@ -1,6 +1,6 @@
 {
   "name": "ds",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Simple data store for prototyping",
   "author": "Joe Hitchens <joe@sleepless.com> (sleepless.com)",
   "license": {
